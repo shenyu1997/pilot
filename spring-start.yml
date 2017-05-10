@@ -1,0 +1,248 @@
+spring module:
+  - core
+  - aop
+  - instrument (tomcat)
+  - data access
+  - web
+  - test
+
+spring core: 
+  - DI Basic:
+    - java config / xml config / hybird config
+    - applicationContext
+    - @Component:
+      - @Service, @Repository, @Configuration, @Controller
+      - bean name
+    - @ComponentScan:
+      - basePackages
+      - basePackageClasses
+      - includeFilter / excludeFilter
+    - @Autowired:
+      - by type
+      - on field
+      - on setter
+      - List:
+        @Order
+    - @Configuration
+    - @Bean:
+      - return type -> bean type
+      - function name -> bean name 
+      - dependence inject
+    - FactoryBean
+    - life cycle:
+      - @PostConstruct
+      - @PreDestroy /destroyMethod
+      - BeanPostProcessor
+      - BeanFactoryPostProcessor
+    - hybird config:
+      - @Import 
+      - @ImportResource
+      - <import resouce>
+      - <bean>
+  - DI Advance:
+      - @Primary
+      - @Qualifier
+      - @Profile
+      - @Conditional
+      - @Scope:
+        - proxyMode
+      - inject value:
+        - Envionment
+        - @PropertySource:
+          - PropertyPlaceholderConfigurer bean
+          - PropertySourcesPlaceholderConfigurer bean
+        - @Value
+        - spEL      
+  - AOP:
+    - concept
+    - term:
+      - Aspect
+      - Advice
+      - Pointcut
+      - Join point
+      - introduction
+      - Weaving
+    - spring aop annotation:
+      - @EnableAspectJAutoProxy
+      - @Aspect
+      - advice:
+        - @Before
+        - @After
+        - @AfterReturing
+        - @AfterThrowing
+      - @Pointcut
+      - Pointcut Designators:
+        - execution
+        - @annotation
+        - within
+        - arg
+        - @args
+        - @within
+        - this
+        - target
+        - @target
+
+Servlet 3.0 new feature:
+    - web-fragment
+    - annotation:
+      - @WebFilter
+      - @WebServlet
+      - @WebListener
+    - ServletContext:
+      - addServlet
+      - addFilter
+    - ServletContainerInitializer:
+      - onStartup
+
+spring web mvc & Rest:
+  - Architecture:
+    - HandlerMapping
+    - HandlerAdapter
+    - HandlerExceptionResolver
+    - ViewResolver
+    - LocaleResolver
+    - ThemeResolver
+    - MultipartResolver
+    - FlashMapManager
+    - HttpMessageConverter
+  - java config:
+    - WebApplicationInitializer 
+    - AbstractAnnotationConfigDispatcherServletInitializer
+  - mvc & REST annotation:
+    - @Controller
+    - @RequestMapping
+      - @GetMapping
+      - @PutMapping
+      - @PostMapping
+      - @DeleteMapping
+    - input arguments:
+      - @RequestParam
+      - @PathVariable
+      - @RequestBody
+      - @CookieValue
+      - @RequestHeader
+      - HttpEntity
+      - Locale / TimeZone
+      - InputStream / OutputStream
+      - HttpServletRequest / HttpServletResponse
+      - UriComponentsBuilder
+    - @Valid:
+      - @NotNull
+      - @Size
+      - @Digits
+      - @Max
+      - @Min
+    - return value:
+      - @ResponseBody:
+      - ResponseEntity
+    - @RestController
+    - Exception Handler:
+      - Build-In Exception
+      - @ResponseStatus
+      - @ExceptionHandler
+      - @ControllerAdvice
+  - Configuring Spring MVC:
+    - @EnableWebMvc
+    - extend WebMvcConfigurerAdapter
+    - Interceptors
+    - add Fileter:
+      - Normal Filter VS DelegatingFilterProxy
+      - Fileter VS Interceptors
+    - add Servlet
+    - Listener
+    - DefaultServletHttpRequestHandler
+
+RestTemplate:
+  - URLTempate
+  - Get:
+    - getForObject
+    - getForEntity
+  - Post:
+    - postForObject
+    - postForEntity
+    - postForLocation
+  - Delete:
+    - delete
+  - Put:
+    - put
+  - Others:
+    - exchange
+    - execute
+    - optionsForAllow
+    - headForHeaders
+
+Data Access - JDBC:
+  - Log Level
+  - DataSouce
+    - DBCP, C3p0...
+    - jndi
+    - embedded database
+  - spring supported utility:
+    - JdbcTemplate
+    - RowMapper
+    - NamedParameterJdbcTempate
+    - ResourceDatabasePopulator
+  - Exception Converter
+    - @Repository
+    - PersistenceExceptionTranslationPostProcessor
+  - Transaction:
+    - basic concept of ts
+    - auto commit
+    - TransactionManager:
+      - PlatformTransactionManager
+      - EnableTransactionManagement 
+      - @Transactional
+      - Transaction propagation
+
+TestContext Framework:
+  - Common:
+    - SpringRunner
+    - @ContextConfiguration
+    - @DirtiesContext
+    - @Autowired
+    - @ActiveProfiles
+    - @TestPropertySource
+    - @Repeat
+    - @Timed
+    - @IfProfileValue
+  - Data access:
+    - @Transactional
+    - @BeforeTransaction
+    - @AfterTransaction 
+    - ScriptUtils
+    - @Sql
+  - web:
+    - @WebAppConfiguration
+    - MockMvc
+    - MockHttpServletRequest, MockHttpServletResponse 
+    - Filter 
+  - Client-Side REST:
+    - MockRestServiceServer 
+
+Data Access:
+  - JDBC & Transaction
+  - JPA
+  - Spring Data
+    - jpa
+    - mongo
+  - Cache
+
+Spring Security:
+  - Filter & Configure
+  - Authenticate
+  - Authorize
+  - ACL
+
+Resource:
+  - Resource
+  - l10n
+  - DataFormat
+    - Date
+    - Number
+
+Event and Message:
+  - Spring Event
+  - JMS
+  - AMQP
+
+Task & Schedule
