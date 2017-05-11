@@ -15,6 +15,8 @@ import shenyu.pilot.config.WebConfig;
 @WebAppConfiguration
 @ContextConfiguration(classes = WebConfig.class)
 public abstract class WebIntegrationTest extends IntegrationTest {
+    public static final String SERVER_PREFIX = "http://localhost";
+
     @Autowired
     protected WebApplicationContext webApplicationContext;
 

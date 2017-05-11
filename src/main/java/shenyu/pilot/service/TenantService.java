@@ -23,4 +23,12 @@ public class TenantService {
     public List<Tenant> getAll() {
         return tenantRepository.getAll();
     }
+
+    public Tenant getTenant(String id) {
+        return tenantRepository.getTenantById(id);
+    }
+
+    public Tenant createTenant(Tenant tenant) {
+        return tenantRepository.addTenant(tenant);
+    }
 }

@@ -8,6 +8,14 @@ public class Tenant {
     private String name;
     private String state;
 
+    public Tenant() {
+    }
+
+    public Tenant(String name, String state) {
+        this.name = name;
+        this.state = state;
+    }
+
     public String getId() {
         return id;
     }
