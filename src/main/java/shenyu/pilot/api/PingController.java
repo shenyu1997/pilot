@@ -10,11 +10,10 @@ import static shenyu.pilot.api.PingController.URI_PING;
  * Created by Administrator on 2017/5/7.
  */
 @RestController
-@RequestMapping(URI_PING)
 public class PingController {
     public static final String URI_PING = "/ping";
 
-    @GetMapping("/")
+    @GetMapping(URI_PING)
     public String ping() {
         return "ok";
     }
