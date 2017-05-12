@@ -1,6 +1,7 @@
 package shenyu.pilot;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import shenyu.pilot.config.AgentConfig;
 import shenyu.pilot.config.DaoConfig;
 import shenyu.pilot.config.ServiceConfig;
 import shenyu.pilot.config.WebConfig;
@@ -10,7 +11,7 @@ import shenyu.pilot.config.WebConfig;
  */
 public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] {ServiceConfig.class, DaoConfig.class};
+        return new Class<?>[] {ServiceConfig.class, DaoConfig.class, AgentConfig.class};
     }
 
     protected Class<?>[] getServletConfigClasses() {

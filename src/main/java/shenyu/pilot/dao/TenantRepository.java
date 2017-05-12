@@ -43,14 +43,19 @@ public class TenantRepository {
         };
     }
 
-    public Tenant getTenantById(String id) {
+    public Tenant getById(String id) {
         return jdbcOperations.queryForObject("select * from T_TENANTS where id=?",new Object[]{id},tenantRowMapper());
     }
 
-    public Tenant addTenant(Tenant tenant) {
+    public Tenant save(Tenant tenant) {
         tenant.setId(idGenerator.next());
         jdbcOperations.update("insert into T_TENANTS (id, name, state) values (?, ?, ?)",
                 new Object[]{tenant.getId(),tenant.getName(), tenant.getState()});
         return tenant;
     }
+
+    public void update(Tenant tenant) {
+        jdbcOperations.update("update T_TENANTS set state=? where id=?", new Object[]{tenant.getState(), tenant.getId()});
+    }
+
 }
