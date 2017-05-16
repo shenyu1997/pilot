@@ -3,7 +3,7 @@ package shenyu.pilot.model;
 /**
  * Created by Administrator on 2017/5/8.
  */
-public class Tenant {
+public class Tenant implements Entity{
     private String id;
     private String name;
     private String state;
@@ -11,9 +11,16 @@ public class Tenant {
     public Tenant() {
     }
 
+
+
     public Tenant(String name, String state) {
         this.name = name;
         this.state = state;
+    }
+
+    @Override
+    public String getType() {
+        return "Tenant";
     }
 
     public String getId() {

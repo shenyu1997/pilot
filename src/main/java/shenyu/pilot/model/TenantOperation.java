@@ -3,7 +3,7 @@ package shenyu.pilot.model;
 /**
  * Created by sheyu on 5/12/2017.
  */
-public class TenantOperation {
+public class TenantOperation implements Entity {
     private String id;
     private String tenantId;
     private String action;
@@ -19,6 +19,11 @@ public class TenantOperation {
 
     public void setTenantId(String tenantId) {
         this.tenantId = tenantId;
+    }
+
+    @Override
+    public String getType() {
+        return "TenantOperation";
     }
 
     public String getId() {

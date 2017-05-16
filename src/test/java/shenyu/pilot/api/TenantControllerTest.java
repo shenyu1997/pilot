@@ -6,6 +6,7 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static shenyu.pilot.api.TenantController.URL_TENANT_OPERATIONS;
 import static shenyu.pilot.api.TenantController.URL_THE_TENANT;
 import static shenyu.pilot.api.TenantController.URL_TENANTS;
@@ -63,6 +64,11 @@ public class TenantControllerTest extends WebIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("test xxx"))
                 .andExpect(jsonPath("state").value("active"));
+
+        String auditLocation = location + "/audit/";
+        mockMvc.perform(get(auditLocation))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1));
     }
 
     @Test

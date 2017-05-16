@@ -5,7 +5,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+import shenyu.pilot.model.AuditObject;
 import shenyu.pilot.model.TenantOperation;
+import shenyu.pilot.service.AuditService;
 import shenyu.pilot.service.TenantService;
 import shenyu.pilot.model.Tenant;
 
@@ -21,12 +23,16 @@ public class TenantController {
     @Autowired
     private TenantService tenantService;
 
+    @Autowired
+    private AuditService auditService;
+
     public static final String TENANT_ID = "tenantId";
     public static final String OPERATION_ID = "operationId";
     public static final String URL_TENANTS = "/tenant/";
     public static final String URL_THE_TENANT = URL_TENANTS + "{" + TENANT_ID + "}";
     public static final String URL_TENANT_OPERATIONS = URL_THE_TENANT + "/operation/";
     public static final String URL_THE_TENANT_OPERATION = URL_TENANT_OPERATIONS + "{" + OPERATION_ID + "}";
+    public static final String URL_THE_TENANT_AUDITS = URL_THE_TENANT + "/audit/";
 
     @GetMapping(URL_TENANTS)
     public List<Tenant> all() {
@@ -36,6 +42,13 @@ public class TenantController {
     @GetMapping(URL_THE_TENANT)
     public Tenant getTenant(@PathVariable(TENANT_ID) String id) {
         return tenantService.getTenant(id);
+    }
+
+    @GetMapping(URL_THE_TENANT_AUDITS)
+    public List<AuditObject> auditObjects(@PathVariable(TENANT_ID) String id) {
+        Tenant tenant = new Tenant();
+        tenant.setId(id);
+        return auditService.getAuditsByEntity(tenant);
     }
 
     @PostMapping(URL_TENANTS)

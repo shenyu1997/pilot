@@ -8,6 +8,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * Created by Administrator on 2017/5/8.
  */
 @Configuration
-@ComponentScan("shenyu.pilot.service")
+@ComponentScan({"shenyu.pilot.service","shenyu.pilot.aspect"})
+@EnableAspectJAutoProxy
 public class ServiceConfig {
 }
