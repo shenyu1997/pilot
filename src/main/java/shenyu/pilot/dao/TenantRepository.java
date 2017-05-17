@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import shenyu.pilot.aspect.Auditable;
+import shenyu.pilot.aspect.Audit;
 import shenyu.pilot.dao.util.IdGenerator;
 import shenyu.pilot.model.Tenant;
 
@@ -47,7 +47,7 @@ public class TenantRepository {
         return jdbcOperations.queryForObject("select * from T_TENANTS where id=?",new Object[]{id},tenantRowMapper());
     }
 
-    @Auditable
+    @Audit
     public Tenant save(Tenant tenant) {
         tenant.setId(idGenerator.next());
         jdbcOperations.update("insert into T_TENANTS (id, name, state) values (?, ?, ?)",
@@ -55,7 +55,7 @@ public class TenantRepository {
         return tenant;
     }
 
-    @Auditable
+    @Audit
     public void update(Tenant tenant) {
         jdbcOperations.update("update T_TENANTS set state=? where id=?", new Object[]{tenant.getState(), tenant.getId()});
     }

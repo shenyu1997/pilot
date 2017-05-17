@@ -12,6 +12,7 @@ import shenyu.pilot.dao.util.IdGenerator;
 import shenyu.pilot.model.AuditObject;
 
 import javax.sql.DataSource;
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class AuditRepository {
         };
     }
 
-    public List<AuditObject> getByTargetTypeAndTargetId(String type, String id) {
+    public List<AuditObject> getByTargetTypeAndTargetId(Serializable type, Serializable id) {
         return jdbcOperations.query("select * from T_AUDIT_LOGS where target_type = ? and target_id = ?", auditObjectRowMapper(), type, id);
     }
 }

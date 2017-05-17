@@ -5,9 +5,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import shenyu.pilot.IntegrationTest;
 import shenyu.pilot.model.AuditObject;
-import shenyu.pilot.model.Entity;
+import shenyu.pilot.model.Auditable;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ public class AuditServiceTest extends IntegrationTest {
 
     @Test
     public void addAndGetTest() {
-        AuditObject auditObject = auditService.addAudit("peter", "save", new Entity() {
+        AuditObject auditObject = auditService.addAudit("peter", "save", new Auditable() {
             @Override
             public String getId() {
                 return "1234";
@@ -37,7 +36,7 @@ public class AuditServiceTest extends IntegrationTest {
         Assert.assertEquals(persistenceAuditObj.getAction(),"save");
         Assert.assertEquals(persistenceAuditObj.getTargetId(),"1234");
 
-        List<AuditObject> audits = auditService.getAuditsByEntity(new Entity() {
+        List<AuditObject> audits = auditService.getAuditsByEntity(new Auditable() {
             @Override
             public String getId() {
                 return "1234";

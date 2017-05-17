@@ -1,5 +1,7 @@
 package shenyu.pilot.model;
 
+import java.io.Serializable;
+
 /**
  * Created by sheyu on 5/16/2017.
  */
@@ -10,9 +12,9 @@ public class AuditObject {
     private Long actionTime;
     private String target;
     private String targetType;
-    private String targetId;
+    private Serializable targetId;
 
-    public AuditObject(String who, String action, Long actionTime, String target, String targetType, String targetId) {
+    public AuditObject(String who, String action, Long actionTime, String target, String targetType, Serializable targetId) {
         this.who = who;
         this.action = action;
         this.actionTime = actionTime;
@@ -69,11 +71,11 @@ public class AuditObject {
         this.targetType = targetType;
     }
 
-    public String getTargetId() {
+    public Serializable getTargetId() {
         return targetId;
     }
 
-    public void setTargetId(String targetId) {
+    public void setTargetId(Serializable targetId) {
         this.targetId = targetId;
     }
 

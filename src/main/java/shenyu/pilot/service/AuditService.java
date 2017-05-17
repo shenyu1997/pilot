@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import shenyu.pilot.dao.AuditRepository;
 import shenyu.pilot.model.AuditObject;
-import shenyu.pilot.model.Entity;
+import shenyu.pilot.model.Auditable;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -21,11 +22,11 @@ public class AuditService {
     @Autowired
     private AuditRepository auditRepository;
 
-    public AuditObject addAudit(String who, String action, Entity target) {
+    public AuditObject addAudit(String who, String action, Auditable target) {
         try {
             String targetStr = "";
             String targetType = "";
-            String targetId = "";
+            Serializable targetId = "";
             if(target != null) {
                 targetStr = new ObjectMapper().writeValueAsString(target);
                 targetType = target.getType();
@@ -43,7 +44,7 @@ public class AuditService {
         return auditRepository.getById(id);
     }
 
-    public List<AuditObject> getAuditsByEntity(Entity entity) {
-        return auditRepository.getByTargetTypeAndTargetId(entity.getType(), entity.getId());
+    public List<AuditObject> getAuditsByEntity(Auditable auditable) {
+        return auditRepository.getByTargetTypeAndTargetId(auditable.getType(), auditable.getId());
     }
 }

@@ -3,7 +3,7 @@ package shenyu.pilot.model;
 /**
  * Created by Administrator on 2017/5/8.
  */
-public class Tenant implements Entity{
+public class Tenant implements Auditable {
     private String id;
     private String name;
     private String state;
