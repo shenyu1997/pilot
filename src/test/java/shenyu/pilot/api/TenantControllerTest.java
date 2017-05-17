@@ -18,7 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.util.UriTemplate;
-import shenyu.pilot.WebIntegrationTest;
+import shenyu.pilot.common.MockUser;
+import shenyu.pilot.web.WebIntegrationTest;
 import shenyu.pilot.agent.SawAgent;
 import shenyu.pilot.common.JsonUtil;
 import shenyu.pilot.model.Tenant;
@@ -33,7 +34,7 @@ public class TenantControllerTest extends WebIntegrationTest {
     @Test
     @Sql("insert_test_tenants.sql")
     public void allTest() throws Exception {
-        mockMvc.perform(get(URL_TENANTS))
+        mockMvc.perform(MockUser.admin(get(URL_TENANTS)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1))
                 .andExpect(jsonPath("$[0].name").value("tenant a"))
@@ -44,7 +45,7 @@ public class TenantControllerTest extends WebIntegrationTest {
     @Test
     @Sql("insert_test_tenants.sql")
     public void getTenantTest() throws Exception {
-        mockMvc.perform(get(URL_THE_TENANT, 123456))
+        mockMvc.perform(MockUser.admin(get(URL_THE_TENANT, 123456)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("tenant a"))
                 .andExpect(jsonPath("id").value("123456"))
@@ -53,20 +54,20 @@ public class TenantControllerTest extends WebIntegrationTest {
 
     @Test
     public void createTenantTest() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(post(URL_TENANTS)
+        MvcResult mvcResult = mockMvc.perform(MockUser.admin(post(URL_TENANTS))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.asJsonString(new Tenant("test xxx", "active"))))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", containsString(SERVER_PREFIX + URL_TENANTS)))
                 .andReturn();
         String location = mvcResult.getResponse().getHeader("location");
-        mockMvc.perform(get(location))
+        mockMvc.perform(MockUser.admin(get(location)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("test xxx"))
                 .andExpect(jsonPath("state").value("active"));
 
         String auditLocation = location + "/audit/";
-        mockMvc.perform(get(auditLocation))
+        mockMvc.perform(MockUser.admin(get(auditLocation)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(1));
     }
@@ -74,12 +75,12 @@ public class TenantControllerTest extends WebIntegrationTest {
     @Test
     @Sql("insert_test_tenants.sql")
     public void updateTenant() throws Exception {
-        mockMvc.perform(put(URL_THE_TENANT, 123456)
+        mockMvc.perform(MockUser.admin(put(URL_THE_TENANT, 123456))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.asJsonString(new Tenant(null, "inactive"))))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(get(URL_THE_TENANT, 123456))
+        mockMvc.perform(MockUser.admin(get(URL_THE_TENANT, 123456)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("tenant a"))
                 .andExpect(jsonPath("id").value("123456"))
@@ -93,7 +94,7 @@ public class TenantControllerTest extends WebIntegrationTest {
     @Sql("insert_test_tenants.sql")
     public void createTenantOperationTest() throws Exception {
         mockServer.expect(requestTo(sawAgent.createURL())).andExpect(method(HttpMethod.PUT)).andRespond(withSuccess());
-        MvcResult mvcResult = mockMvc.perform(put(URL_TENANT_OPERATIONS, "123456")
+        MvcResult mvcResult = mockMvc.perform(MockUser.admin(put(URL_TENANT_OPERATIONS, "123456"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.asJsonString(new TenantOperation(null, null, "create", null, false))))
                 .andExpect(status().isCreated())
@@ -101,7 +102,7 @@ public class TenantControllerTest extends WebIntegrationTest {
                 .andReturn();
 
         String location = mvcResult.getResponse().getHeader("location");
-        mockMvc.perform(get(location))
+        mockMvc.perform(new MockUser("admin","123").with(get(location)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("isSuccessful").value(true));
     }

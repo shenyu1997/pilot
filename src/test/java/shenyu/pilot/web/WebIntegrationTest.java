@@ -1,4 +1,4 @@
-package shenyu.pilot;
+package shenyu.pilot.web;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.filter.DelegatingFilterProxy;
+import shenyu.pilot.IntegrationTest;
 import shenyu.pilot.config.WebConfig;
 
 /**
@@ -43,7 +45,7 @@ public abstract class WebIntegrationTest extends IntegrationTest {
 
     @Before
     public void before() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(new DelegatingFilterProxy("authFilter", webApplicationContext)).build();
         mockServer = MockRestServiceServer.bindTo(restTemplate).build();
     }
 
