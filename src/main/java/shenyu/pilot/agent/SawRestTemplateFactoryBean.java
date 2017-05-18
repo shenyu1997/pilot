@@ -17,8 +17,9 @@ import shenyu.pilot.model.Principal;
 import shenyu.pilot.model.UserContext;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by sheyu on 5/12/2017.
@@ -53,7 +54,7 @@ public class SawRestTemplateFactoryBean implements FactoryBean<RestTemplate> {
         }
     }
 
-    public ClientHttpRequestInterceptor AuthHeaderClientHttpRequestInterceptor() {
+    public ClientHttpRequestInterceptor authHeaderClientHttpRequestInterceptor() {
         return (final HttpRequest request, byte[] content, ClientHttpRequestExecution execution) -> {
             Principal principal = userContext.getPrincipal();
             String authStr = "Basic " + Base64.getEncoder().encodeToString(String.format("%s:%s", principal.getName(), principal.getCredential()).getBytes());
@@ -78,10 +79,15 @@ public class SawRestTemplateFactoryBean implements FactoryBean<RestTemplate> {
         };
     }
 
+    @Autowired
+    private List<ClientHttpRequestInterceptor> clientHttpRequestInterceptors;
+
     @Override
     public RestTemplate getObject() throws Exception {
         RestTemplate restTemplate =  new RestTemplate();
-        restTemplate.setInterceptors(Collections.singletonList(AuthHeaderClientHttpRequestInterceptor()));
+        List<ClientHttpRequestInterceptor> sawInterceptors = new ArrayList(clientHttpRequestInterceptors);
+        sawInterceptors.add(authHeaderClientHttpRequestInterceptor());
+        restTemplate.setInterceptors(sawInterceptors);
         return  restTemplate;
     }
 

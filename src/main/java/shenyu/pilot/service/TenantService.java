@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shenyu.pilot.agent.SawAgent;
+import shenyu.pilot.agent.SawApi;
 import shenyu.pilot.dao.TenantOperationRepository;
 import shenyu.pilot.dao.TenantRepository;
 import shenyu.pilot.model.Tenant;
@@ -27,7 +27,7 @@ public class TenantService {
     private TenantOperationRepository tenantOperationRepository;
 
     @Autowired
-    private SawAgent sawAgent;
+    private SawApi sawApi;
 
     private static Logger logger = Logger.getLogger(TenantService.class);
 
@@ -55,7 +55,7 @@ public class TenantService {
 
         boolean isSuccessful = false;
         try {
-            isSuccessful = sawAgent.operate(operation);
+            isSuccessful = sawApi.operateTenant(operation);
         } catch (Exception e) {
             logger.error(e);
         }

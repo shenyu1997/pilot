@@ -11,8 +11,11 @@ import static shenyu.pilot.api.TenantController.URL_TENANT_OPERATIONS;
 import static shenyu.pilot.api.TenantController.URL_THE_TENANT;
 import static shenyu.pilot.api.TenantController.URL_TENANTS;
 
+import org.hamcrest.Matcher;
+import org.hamcrest.core.IsNull;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
@@ -20,8 +23,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.util.UriTemplate;
 import shenyu.pilot.common.MockUser;
 import shenyu.pilot.agent.SawRestTemplateFactoryBean;
+import shenyu.pilot.web.CorrelationIdFilter;
 import shenyu.pilot.web.WebIntegrationTest;
-import shenyu.pilot.agent.SawAgent;
+import shenyu.pilot.agent.SawApi;
 import shenyu.pilot.common.JsonUtil;
 import shenyu.pilot.model.Tenant;
 import shenyu.pilot.model.TenantOperation;
@@ -99,9 +103,10 @@ public class TenantControllerTest extends WebIntegrationTest {
     @Sql("insert_test_tenants.sql")
     public void createTenantOperationTest() throws Exception {
         //mock saw server
-        sawServer.expect(requestTo(sawRestTemplateFactoryBean.createURL(SawAgent.REST_CREATE_TENANT)))
+        sawServer.expect(requestTo(sawRestTemplateFactoryBean.createURL(SawApi.REST_CREATE_TENANT)))
                 .andExpect(method(HttpMethod.PUT))
-                .andExpect(org.springframework.test.web.client.match.MockRestRequestMatchers.header(MockUser.BASIC_AUTH_HEAD, containsString(new MockUser("admin","123456").mockUserPwdStr())))
+                .andExpect(org.springframework.test.web.client.match.MockRestRequestMatchers.header(MockUser.BASIC_AUTH_HEAD, new MockUser("admin","123456").mockUserPwdStr()))
+                .andExpect(org.springframework.test.web.client.match.MockRestRequestMatchers.header(CorrelationIdFilter.HEAD_CORRELATION_ID, IsNull.notNullValue()))
                 .andRespond(withSuccess());
 
         MvcResult mvcResult = mockMvc.perform(MockUser.admin(put(URL_TENANT_OPERATIONS, "123456"))

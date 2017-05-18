@@ -11,6 +11,15 @@ import org.springframework.stereotype.Component;
 @Scope(value = "request",proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserContext {
     private Principal principal;
+    private String correlationId;
+
+    public String getCorrelationId() {
+        return correlationId;
+    }
+
+    public void setCorrelationId(String correlationId) {
+        this.correlationId = correlationId;
+    }
 
     public void setPrincipal(Principal principal) {
         this.principal = principal;
@@ -18,5 +27,13 @@ public class UserContext {
 
     public Principal getPrincipal() {
         return principal;
+    }
+
+    @Override
+    public String toString() {
+        return "UserContext{" +
+                "principal=" + principal +
+                ", correlationId='" + correlationId + '\'' +
+                '}';
     }
 }

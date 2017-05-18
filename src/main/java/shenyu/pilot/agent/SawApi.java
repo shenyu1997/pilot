@@ -15,7 +15,7 @@ import java.net.MalformedURLException;
  * Created by sheyu on 5/12/2017.
  */
 @Component
-public class SawAgent {
+public class SawApi {
     public static final String REST_CREATE_TENANT = "tenantManagement/create";
 
 
@@ -23,7 +23,7 @@ public class SawAgent {
     @Qualifier("saw")
     private RestTemplate restTemplate;
 
-    public boolean operate(TenantOperation tenantOperation) {
+    public boolean operateTenant(TenantOperation tenantOperation) {
         try {
             switch (tenantOperation.getAction()) {
                 case "create":

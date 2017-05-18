@@ -46,7 +46,10 @@ public abstract class WebIntegrationTest extends IntegrationTest {
 
     @Before
     public void before() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(new DelegatingFilterProxy("authFilter", webApplicationContext)).build();
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .addFilter(new DelegatingFilterProxy("authFilter", webApplicationContext))
+                .addFilter(new DelegatingFilterProxy("correlationIdFilter", webApplicationContext))
+                .build();
         sawServer = MockRestServiceServer.bindTo(sawRestTemplate).ignoreExpectOrder(true).build();
     }
 
