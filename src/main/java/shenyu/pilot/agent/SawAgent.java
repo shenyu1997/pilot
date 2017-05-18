@@ -1,6 +1,7 @@
 package shenyu.pilot.agent;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -14,22 +15,12 @@ import java.net.MalformedURLException;
  * Created by sheyu on 5/12/2017.
  */
 @Component
-@PropertySource("classpath:saw.properties")
 public class SawAgent {
+    public static final String REST_CREATE_TENANT = "tenantManagement/create";
 
-    @Value("${saw.schema}")
-    private String schema;
-
-    @Value("${saw.host}")
-    private String host;
-
-    @Value("${saw.port}")
-    private String port;
-
-    @Value("${saw.uri.prefix}")
-    private String uriPrefix;
 
     @Autowired
+    @Qualifier("saw")
     private RestTemplate restTemplate;
 
     public boolean operate(TenantOperation tenantOperation) {
@@ -47,17 +38,7 @@ public class SawAgent {
         }
     }
 
-    public String createURL() {
-        try {
-            return new UriTemplate("{schema}://{host}:{port}{uriPrefix}tenantManagement/create")
-                    .expand(this.schema, this.host, this.port, this.uriPrefix)
-                    .toURL().toString();
-        } catch (MalformedURLException e) {
-            throw new IllegalArgumentException(e);
-        }
-    }
-
     private void create(TenantOperation tenantOperation) {
-        restTemplate.put(createURL(), tenantOperation);
+        restTemplate.put(REST_CREATE_TENANT, tenantOperation);
     }
 }

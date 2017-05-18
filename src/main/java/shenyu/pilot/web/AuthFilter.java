@@ -1,7 +1,10 @@
 package shenyu.pilot.web;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import shenyu.pilot.model.Principal;
+import shenyu.pilot.model.UserContext;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +19,10 @@ import java.util.regex.Pattern;
  */
 @Component
 public class AuthFilter implements Filter {
-    private Pattern pattern = Pattern.compile("Basic ([\\w=]+)");
+    private Pattern pattern = Pattern.compile("^Basic ([\\w=]+)$");
+
+    @Autowired
+    private UserContext userContext;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -41,7 +47,7 @@ public class AuthFilter implements Filter {
                 int index = nameAndPwd.indexOf(":");
                 String name = nameAndPwd.substring(0,index);
                 String pwd = nameAndPwd.substring(index + 1);
-                //TODO verify name and pwd
+                userContext.setPrincipal(new Principal(name, pwd));
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }

@@ -12,7 +12,7 @@ import shenyu.pilot.config.*;
  * Created by Administrator on 2017/5/7.
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {ServiceConfig.class, DaoTestConfig.class, DaoConfig.class, AgentConfig.class})
+@ContextConfiguration(classes = {ApplicationConfig.class})
 @Transactional
 @ActiveProfiles("test")
 @TestPropertySource("classpath:h2_test.properties")

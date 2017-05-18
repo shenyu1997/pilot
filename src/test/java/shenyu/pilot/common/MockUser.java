@@ -10,6 +10,7 @@ import java.util.Base64;
 public class MockUser {
     private String username;
     private String password;
+    public static String BASIC_AUTH_HEAD = "Authorization";
 
     public MockUser(String username, String password) {
         this.username = username;
@@ -17,11 +18,11 @@ public class MockUser {
     }
 
     public MockHttpServletRequestBuilder with(MockHttpServletRequestBuilder builder) {
-        return builder.header("Authorization", mockUserStr(username, password));
+        return builder.header(BASIC_AUTH_HEAD, mockUserPwdStr());
     }
 
-    private String mockUserStr(String name, String pwd) {
-        return "Authorization: Basic " + Base64.getEncoder().encodeToString(String.format("%s:%s",name,pwd).getBytes());
+    public String mockUserPwdStr() {
+        return "Basic " + Base64.getEncoder().encodeToString(String.format("%s:%s",this.username, this.password).getBytes());
     }
 
     public static MockHttpServletRequestBuilder admin(MockHttpServletRequestBuilder builder) {

@@ -3,8 +3,8 @@ package shenyu.pilot.web;
 import org.junit.After;
 import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -32,10 +32,11 @@ public abstract class WebIntegrationTest extends IntegrationTest {
 
     protected MockMvc mockMvc;
 
-    protected MockRestServiceServer mockServer;
+    protected MockRestServiceServer sawServer;
 
     @Autowired
-    private RestTemplate restTemplate;
+    @Qualifier("saw")
+    private RestTemplate sawRestTemplate;
 
     @Bean
     @Profile("test")
@@ -46,11 +47,11 @@ public abstract class WebIntegrationTest extends IntegrationTest {
     @Before
     public void before() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).addFilter(new DelegatingFilterProxy("authFilter", webApplicationContext)).build();
-        mockServer = MockRestServiceServer.bindTo(restTemplate).build();
+        sawServer = MockRestServiceServer.bindTo(sawRestTemplate).ignoreExpectOrder(true).build();
     }
 
     @After
     public void after() {
-        mockServer.verify();
+        sawServer.verify();
     }
 }

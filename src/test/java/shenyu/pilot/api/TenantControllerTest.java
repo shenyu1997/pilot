@@ -19,6 +19,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.util.UriTemplate;
 import shenyu.pilot.common.MockUser;
+import shenyu.pilot.agent.SawRestTemplateFactoryBean;
 import shenyu.pilot.web.WebIntegrationTest;
 import shenyu.pilot.agent.SawAgent;
 import shenyu.pilot.common.JsonUtil;
@@ -54,22 +55,26 @@ public class TenantControllerTest extends WebIntegrationTest {
 
     @Test
     public void createTenantTest() throws Exception {
+        //create tenant and verify
         MvcResult mvcResult = mockMvc.perform(MockUser.admin(post(URL_TENANTS))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.asJsonString(new Tenant("test xxx", "active"))))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("location", containsString(SERVER_PREFIX + URL_TENANTS)))
                 .andReturn();
+        //get tenant which just created, and verify attributes of tenant
         String location = mvcResult.getResponse().getHeader("location");
         mockMvc.perform(MockUser.admin(get(location)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("name").value("test xxx"))
                 .andExpect(jsonPath("state").value("active"));
 
+        //get audit log, and verify "who" attribute
         String auditLocation = location + "/audit/";
         mockMvc.perform(MockUser.admin(get(auditLocation)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(1));
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].who").value("admin"));
     }
 
     @Test
@@ -88,12 +93,17 @@ public class TenantControllerTest extends WebIntegrationTest {
     }
 
     @Autowired
-    private SawAgent sawAgent;
+    private SawRestTemplateFactoryBean sawRestTemplateFactoryBean;
 
     @Test
     @Sql("insert_test_tenants.sql")
     public void createTenantOperationTest() throws Exception {
-        mockServer.expect(requestTo(sawAgent.createURL())).andExpect(method(HttpMethod.PUT)).andRespond(withSuccess());
+        //mock saw server
+        sawServer.expect(requestTo(sawRestTemplateFactoryBean.createURL(SawAgent.REST_CREATE_TENANT)))
+                .andExpect(method(HttpMethod.PUT))
+                .andExpect(org.springframework.test.web.client.match.MockRestRequestMatchers.header(MockUser.BASIC_AUTH_HEAD, containsString(new MockUser("admin","123456").mockUserPwdStr())))
+                .andRespond(withSuccess());
+
         MvcResult mvcResult = mockMvc.perform(MockUser.admin(put(URL_TENANT_OPERATIONS, "123456"))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.asJsonString(new TenantOperation(null, null, "create", null, false))))
@@ -105,5 +115,6 @@ public class TenantControllerTest extends WebIntegrationTest {
         mockMvc.perform(new MockUser("admin","123").with(get(location)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("isSuccessful").value(true));
+
     }
 }

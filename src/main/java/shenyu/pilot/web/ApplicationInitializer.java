@@ -2,9 +2,7 @@ package shenyu.pilot.web;
 
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-import shenyu.pilot.config.AgentConfig;
-import shenyu.pilot.config.DaoConfig;
-import shenyu.pilot.config.ServiceConfig;
+import shenyu.pilot.config.ApplicationConfig;
 import shenyu.pilot.config.WebConfig;
 
 import javax.servlet.Filter;
@@ -14,7 +12,7 @@ import javax.servlet.Filter;
  */
 public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] {ServiceConfig.class, DaoConfig.class, AgentConfig.class};
+        return new Class<?>[] {ApplicationConfig.class};
     }
 
     protected Class<?>[] getServletConfigClasses() {
