@@ -76,8 +76,4 @@ public class TenantController {
         return tenantService.getTenantOperation(tenantId, operationId);
     }
 
-    @ExceptionHandler(EmptyResultDataAccessException.class)
-    public ResponseEntity<String> exceptionHandler(EmptyResultDataAccessException e) {
-        return ResponseEntity.notFound().build();
-    }
 }
