@@ -1,6 +1,6 @@
 # Spring Java Config Project Sample
 
-The purpose of this project is show how to using spring **java config** to build up a web REST service.
+The purpose of this project is show how to use spring **java config** to build up a web REST service.
 
 ### Without Spring Features:
 Spring Boot, Spring Cloud(Micro Service), JPA, Spring Data, Spring Security.
