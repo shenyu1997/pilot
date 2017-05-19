@@ -1,5 +1,7 @@
 # Spring Java Config Project Sample
 
+[![Build Status](https://travis-ci.org/shenyu1997/pilot.svg?branch=master)](https://travis-ci.org/shenyu1997/pilot)
+
 The purpose of this project is show how to use spring **java config** to build up a web REST service.
 
 ### Without Spring Features:
