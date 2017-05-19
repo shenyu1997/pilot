@@ -1,4 +1,4 @@
-package shenyu.pilot.api;
+package shenyu.pilot.api.advice;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.ResponseEntity;
