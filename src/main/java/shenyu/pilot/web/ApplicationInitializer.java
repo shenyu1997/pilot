@@ -25,6 +25,6 @@ public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherSe
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[] { new DelegatingFilterProxy("authFilter"), new DelegatingFilterProxy("CorrelationIdFilter")};
+        return new Filter[] { new DelegatingFilterProxy("authFilter"), new DelegatingFilterProxy("correlationIdFilter")};
     }
 }
