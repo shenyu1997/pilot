@@ -24,7 +24,7 @@ Spring Boot, Spring Cloud(Micro Service), JPA, Spring Data, Spring Security.
   
 - **Spring web mvc & Rest:** 
 
-    @EnableWebMvc, @Controller, @RestController, @GetMapping, @PutMapping, @PostMapping, @PathVariable, @RequestBody, HttpEntity, @RestControllerAdvice, DelegatingFilterProxy
+    @EnableWebMvc, @Controller, @RestController, @GetMapping, @PutMapping, @PostMapping, @PathVariable, @RequestBody, HttpEntity, @RestControllerAdvice, DelegatingFilterProxy, MessageSource(l10n)
 
 - **RestTemplate:** 
 
