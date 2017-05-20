@@ -21,10 +21,4 @@ import java.util.Locale;
         includeFilters = @ComponentScan.Filter(value = RestController.class, type= FilterType.ANNOTATION))
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
-
-    @Bean
-    public LocaleResolver localeResolver() {
-        return new AcceptHeaderLocaleResolver();
-    }
-
 }
