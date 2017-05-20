@@ -1,4 +1,4 @@
-package shenyu.pilot.commen;
+package shenyu.pilot.common;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;

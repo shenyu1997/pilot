@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import shenyu.pilot.IntegrationTest;
-import shenyu.pilot.commen.L10nService;
 
 /**
  * Created by sheyu on 2017/5/20.

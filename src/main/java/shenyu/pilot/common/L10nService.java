@@ -1,4 +1,4 @@
-package shenyu.pilot.commen;
+package shenyu.pilot.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

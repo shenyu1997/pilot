@@ -3,10 +3,8 @@ package shenyu.pilot.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import shenyu.pilot.commen.L10nService;
+import shenyu.pilot.common.L10nService;
 import shenyu.pilot.model.UserContext;
-
-import java.util.Locale;
 
 /**
  * Created by sheyu on 2017/5/20.
