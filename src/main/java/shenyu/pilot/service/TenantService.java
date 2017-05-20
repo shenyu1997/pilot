@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import shenyu.pilot.agent.SawApi;
+import shenyu.pilot.remote.SawApi;
 import shenyu.pilot.dao.TenantOperationRepository;
 import shenyu.pilot.dao.TenantRepository;
 import shenyu.pilot.model.Tenant;

@@ -1,4 +1,4 @@
-package shenyu.pilot.agent;
+package shenyu.pilot.remote;
 
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
