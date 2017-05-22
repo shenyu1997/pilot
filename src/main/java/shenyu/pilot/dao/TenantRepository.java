@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import shenyu.pilot.aspect.Audit;
+import shenyu.pilot.common.Audit;
 import shenyu.pilot.dao.util.IdGenerator;
 import shenyu.pilot.model.Tenant;
 

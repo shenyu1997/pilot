@@ -1,10 +1,10 @@
 package shenyu.pilot.config;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.FilterType;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.*;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.ResourceBundleViewResolver;
 
 /**
  * Created by Administrator on 2017/5/8.
@@ -15,4 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
         @ComponentScan.Filter(value = WebConfig.class, type = FilterType.ASSIGNABLE_TYPE)})
 @EnableAspectJAutoProxy
 public class ApplicationConfig {
+
+    @Bean
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource resourceBundleMessageSource = new ResourceBundleMessageSource();
+        resourceBundleMessageSource.setBasenames("l10n/messages");
+        return resourceBundleMessageSource;
+    }
+
 }

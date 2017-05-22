@@ -1,6 +1,7 @@
 package shenyu.pilot.web;
 
 import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.filter.RequestContextFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import shenyu.pilot.config.ApplicationConfig;
 import shenyu.pilot.config.WebConfig;
@@ -25,6 +26,6 @@ public class ApplicationInitializer extends AbstractAnnotationConfigDispatcherSe
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[] { new DelegatingFilterProxy("authFilter"), new DelegatingFilterProxy("CorrelationIdFilter")};
+        return new Filter[] {new RequestContextFilter(), new DelegatingFilterProxy("authFilter"), new DelegatingFilterProxy("correlationIdFilter")};
     }
 }
