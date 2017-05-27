@@ -123,7 +123,7 @@
         <snapshotRepository>
             <id>back-office</id>
             <name>Snapshots repository</name>
-            <url>: http://shcitsmaxdl01.hpeswlab.net:8081/nexus/content/repositories/back-office/</url>
+            <url>http://shcitsmaxdl01.hpeswlab.net:8081/nexus/content/repositories/back-office/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
