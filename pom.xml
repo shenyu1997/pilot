@@ -22,6 +22,7 @@
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.17</log4j.version>
         <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
+        <org.apache.maven.plugins_maven-deploy-plugin_version>2.8.2</org.apache.maven.plugins_maven-deploy-plugin_version>
     </properties>
 
     <dependencies>
@@ -111,6 +112,18 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${org.apache.maven.plugins_maven-deploy-plugin_version}</version>
+            </plugin>
         </plugins>
     </build>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>back-office</id>
+            <name>Snapshots repository</name>
+            <url>: http://shcitsmaxdl01.hpeswlab.net:8081/nexus/content/repositories/back-office/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
