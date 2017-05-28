@@ -43,5 +43,3 @@ Spring Boot, Spring Cloud(Micro Service), JPA, Spring Data, Spring Security.
     SpringRunner, @ContextConfiguration, @ActiveProfiles, @TestPropertySource, @WebAppConfiguration,  MockMvc, MockRestServiceServer, @Sql, EmbeddedDatabaseBuilder
   
 
-
-
